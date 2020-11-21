@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
+import ImportController from './app/controllers/ImportController';
+
 const router = Router();
 
-router.use('/', (req, res) => {
-  res.json({ success: true });
-});
+router.get('/import', ImportController.formatStation);
 
 export default router;
