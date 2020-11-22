@@ -2,27 +2,34 @@ import 'dotenv/config';
 
 import express from 'express';
 import routes from './routes';
+import { resolve } from 'path';
 
 import cors from 'cors';
 
 import './database';
+import './config/paginate';
 
 class App {
-	constructor() {
-		this.server = express();
+  constructor() {
+    this.server = express();
 
-		this.middlewares();
-		this.routes();
-	}
+    this.middlewares();
+    this.routes();
+  }
 
-	middlewares() {
-		this.server.use(cors());
-		this.server.use(express.json());
-	}
+  middlewares() {
+    this.server.use(cors());
+    this.server.use(express.json());
 
-	routes() {
-		this.server.use(routes);
-	}
+    this.server.use(
+      '/files',
+      express.static(resolve(__dirname, '..', 'tmp', 'images'))
+    );
+  }
+
+  routes() {
+    this.server.use(routes);
+  }
 }
 
 export default new App().server;
