@@ -5,9 +5,15 @@ class GenreController {
     const { id } = req.params;
     const { page = 1 } = req.query;
 
+    let genresIds = '';
+
+    try {
+      genresIds = JSON.parse(id);
+    } catch (e) {}
+
     const results = await Station.paginate(
-      { genres: id, countryCode: 'br' },
-      { page, select: '-frecuencies -programming' }
+      { genres: { $in: genresIds }, countryCode: 'br' },
+      { page, select: '-frecuencies -programming', limit: 24 }
     );
 
     return res.json(results);

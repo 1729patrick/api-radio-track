@@ -2,7 +2,7 @@ import Station from '../schemas/Station';
 
 class PlaylistController {
   async random(req, res) {
-    const randomPage = +(Math.random() * (3956 / 12)).toFixed(0);
+    const randomPage = new Date().getDate();
     const { page = randomPage } = req.query;
 
     const results = await Station.paginate(
