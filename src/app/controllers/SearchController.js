@@ -14,7 +14,7 @@ class SearchController {
           countryCode: 'br',
           name: { $regex: q, $options: 'i' },
         },
-        { page, select: '-frecuencies -programming' }
+        { page, select: '-frecuencies -programming', limit: 30 }
       );
 
       return res.json(results);

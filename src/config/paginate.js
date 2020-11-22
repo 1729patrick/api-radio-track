@@ -4,5 +4,5 @@ paginate.options = {
   lean: true,
   limit: 12,
   leanWithId: false,
-  customLabels: { docs: 'items' },
+  customLabels: { docs: 'items', totalDocs: 'totalItems' },
 };

@@ -13,7 +13,7 @@ router.get('/search', SearchController.index);
 router.get('/genres/:id', GenreController.index);
 router.get('/playlists/random', PlaylistController.random);
 router.get('/playlists/popular', PlaylistController.popular);
-router.get('/playlists/recommends', PlaylistController.random);
+router.get('/playlists/recommend', PlaylistController.random);
 router.get('/playlists/location', PlaylistController.location);
 
 export default router;
