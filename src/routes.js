@@ -5,7 +5,11 @@ import SearchController from './app/controllers/SearchController';
 import GenreController from './app/controllers/GenreController';
 import PlaylistController from './app/controllers/PlaylistController';
 
+import ImportController from './app/controllers/ImportController';
+
 const router = Router();
+
+router.get('/import', ImportController.index);
 
 router.get('/stations', StationController.list);
 router.get('/stations/:id', StationController.index);
