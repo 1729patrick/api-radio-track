@@ -13,7 +13,7 @@ class GenreController {
 
     const results = await Station.paginate(
       { genres: { $in: genresIds }, countryCode: 'br' },
-      { page, select: '-frecuencies -programming', limit: 24 }
+      { page, select: '-frecuencies -programming', populate: 'city' }
     );
 
     return res.json(results);

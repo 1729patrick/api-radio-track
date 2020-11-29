@@ -6,7 +6,7 @@ class StationController {
 
     const results = await Station.paginate(
       { countryCode: 'br' },
-      { page, select: '-frecuencies -programming' }
+      { page, select: '-frecuencies -programming', populate: 'city' }
     );
 
     return res.json(results);

@@ -9,12 +9,21 @@ class SearchController {
         throw new Error();
       }
 
+      const qNormalized = q.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
       const results = await Station.paginate(
         {
           countryCode: 'br',
-          name: { $regex: q, $options: 'i' },
+          name: {
+            $in: [new RegExp(q, 'i'), new RegExp(qNormalized, 'i')],
+          },
         },
-        { page, select: '-frecuencies -programming', limit: 30 }
+        {
+          page,
+          select: '-frecuencies -programming',
+          limit: 30,
+          populate: 'city',
+        }
       );
 
       return res.json(results);
