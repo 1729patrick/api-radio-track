@@ -33,11 +33,12 @@ class App {
     this.server.use(cors());
     this.server.use(express.json());
 
-    this.server.get(
+    this.server(imageLimiter);
+    this.server.use(
       '/files',
-      imageLimiter,
       express.static(resolve(__dirname, '..', 'tmp', 'images'))
     );
+
     this.server.use(limiter);
   }
 
