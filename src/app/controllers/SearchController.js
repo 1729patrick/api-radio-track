@@ -21,7 +21,6 @@ class SearchController {
         {
           page,
           select: '-frecuencies -programming',
-          limit: 30,
           populate: 'city',
         }
       );
