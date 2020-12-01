@@ -2,7 +2,7 @@ import mail from '../libs/mail';
 
 export default {
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300, // limit each IP to 300 requests per windowMs
+  max: 150, // limit each IP to 300 requests per windowMs
   headers: false,
   skipFailedRequests: true,
   handler: function (req, res) {

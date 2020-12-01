@@ -14,6 +14,10 @@ import './config/paginate';
 import rateLimitConfig from './config/rateLimit';
 
 const limiter = rateLimit(rateLimitConfig);
+const imageLimiter = rateLimit({
+  ...rateLimitConfig,
+  max: rateLimitConfig.max * 12,
+});
 
 class App {
   constructor() {
@@ -25,15 +29,16 @@ class App {
 
   middlewares() {
     this.server.set('trust proxy', 1);
-    this.server.use(limiter);
 
     this.server.use(cors());
     this.server.use(express.json());
 
-    this.server.use(
+    this.server.get(
       '/files',
+      imageLimiter,
       express.static(resolve(__dirname, '..', 'tmp', 'images'))
     );
+    this.server.use(limiter);
   }
 
   routes() {
