@@ -1,9 +1,15 @@
+import redis from '../../libs/redis';
 import Station from '../schemas/Station';
 
 class GenreController {
   async index(req, res) {
     const { id } = req.params;
     const { page = 1 } = req.query;
+
+    const cache = await redis.get(`genres-${id}-${page}`);
+    if (cache) {
+      return res.json(JSON.parse(cache));
+    }
 
     let genresIds = '';
 
@@ -12,9 +18,11 @@ class GenreController {
     } catch (e) {}
 
     const results = await Station.paginate(
-      { genres: { $in: genresIds }, countryCode: 'br' },
+      { genres: { $in: genresIds }, countryCode: 'br', streams: { $ne: [] } },
       { page, select: '-frecuencies -programming', populate: 'city' }
     );
+
+    await redis.set(`genres-${id}-${page}`, JSON.stringify(results));
 
     return res.json(results);
   }

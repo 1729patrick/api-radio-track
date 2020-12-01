@@ -1,9 +1,15 @@
+import redis from '../../libs/redis';
 import Station from '../schemas/Station';
 
 class SearchController {
   async index(req, res) {
     try {
       const { q, page = 1 } = req.query;
+
+      const cache = await redis.get(`search-${q}-${page}`);
+      if (cache) {
+        return res.json(JSON.parse(cache));
+      }
 
       if (q.length < 3) {
         throw new Error();
@@ -17,6 +23,7 @@ class SearchController {
           name: {
             $in: [new RegExp(q, 'i'), new RegExp(qNormalized, 'i')],
           },
+          streams: { $ne: [] },
         },
         {
           page,
@@ -24,6 +31,8 @@ class SearchController {
           populate: 'city',
         }
       );
+
+      await redis.set(`search-${q}-${page}`, JSON.stringify(results));
 
       return res.json(results);
     } catch (e) {
