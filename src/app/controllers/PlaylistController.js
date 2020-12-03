@@ -55,6 +55,9 @@ class PlaylistController {
       return res.json(JSON.parse(cache));
     }
 
+    const resultsx = await Station.find().limit(1);
+    console.log({ resultsx });
+
     const results = await Station.paginate(
       { countryCode: 'br', streams: { $ne: [] } },
       {
