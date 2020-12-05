@@ -11,13 +11,13 @@ import './database';
 
 import './config/paginate';
 
-import rateLimitConfig from './config/rateLimit';
+// import rateLimitConfig from './config/rateLimit';
 
-const limiter = rateLimit(rateLimitConfig);
-const imageLimiter = rateLimit({
-  ...rateLimitConfig,
-  max: rateLimitConfig.max * 12,
-});
+// const limiter = rateLimit(rateLimitConfig);
+// const imageLimiter = rateLimit({
+//   ...rateLimitConfig,
+//   max: rateLimitConfig.max * 12,
+// });
 
 class App {
   constructor() {
@@ -35,11 +35,11 @@ class App {
 
     this.server.use(
       '/files',
-      imageLimiter,
+      // imageLimiter,
       express.static(resolve(__dirname, '..', 'tmp', 'images'))
     );
 
-    this.server.use(limiter);
+    // this.server.use(limiter);
   }
 
   routes() {
