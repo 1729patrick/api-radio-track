@@ -19,7 +19,7 @@ class GenreController {
 
     const results = await Station.paginate(
       { genres: { $in: genresIds }, countryCode: 'br', streams: { $ne: [] } },
-      { page, select: '-frecuencies -programming', populate: 'city' }
+      { page, populate: 'city' }
     );
 
     await redis.set(`genres-${id}-${page}`, JSON.stringify(results));

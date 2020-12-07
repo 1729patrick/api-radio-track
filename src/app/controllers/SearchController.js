@@ -27,7 +27,7 @@ class SearchController {
         },
         {
           page,
-          select: '-frecuencies -programming',
+
           populate: 'city',
         }
       );

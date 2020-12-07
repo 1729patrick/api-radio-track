@@ -14,7 +14,6 @@ class PlaylistController {
       { countryCode: 'br', streams: { $ne: [] } },
       {
         page,
-        select: '-frecuencies -programming',
         populate: 'city',
       }
     );
@@ -36,7 +35,7 @@ class PlaylistController {
       { countryCode: 'br', streams: { $ne: [] } },
       {
         page,
-        select: '-frecuencies -programming',
+
         sort: { 'votes.up': 'desc' },
         populate: 'city',
       }
@@ -59,7 +58,7 @@ class PlaylistController {
       { countryCode: 'br', streams: { $ne: [] } },
       {
         page,
-        select: '-frecuencies -programming',
+
         populate: 'city',
       }
     );
@@ -81,7 +80,7 @@ class PlaylistController {
       { countryCode: 'br', streams: { $ne: [] } },
       {
         page,
-        select: '-frecuencies -programming',
+
         populate: 'city',
       }
     );

@@ -12,7 +12,7 @@ class StationController {
 
     const results = await Station.paginate(
       { countryCode: 'br', streams: { $ne: [] } },
-      { page, select: '-frecuencies -programming', populate: 'city' }
+      { page, populate: 'city' }
     );
 
     await redis.set(`all-${page}`, JSON.stringify(results));
