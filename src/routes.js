@@ -4,6 +4,8 @@ import { Router } from 'express';
 import SearchController from './app/controllers/SearchController';
 import GenreController from './app/controllers/GenreController';
 import PlaylistController from './app/controllers/PlaylistController';
+import CloseController from './app/controllers/CloseController';
+import LocationController from './app/controllers/LocationController';
 
 const router = Router();
 
@@ -15,5 +17,11 @@ router.get('/playlists/random', PlaylistController.random);
 router.get('/playlists/popular', PlaylistController.popular);
 router.get('/playlists/recommend', PlaylistController.recommend);
 router.get('/playlists/location', PlaylistController.location);
+
+router.get('/radio/:radioId/closes/:genresIds', CloseController.index);
+router.get(
+  '/radio/:radioId/location/:countryCode/:regionId/:cityId',
+  LocationController.index
+);
 
 export default router;
