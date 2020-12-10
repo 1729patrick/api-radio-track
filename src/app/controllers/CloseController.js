@@ -1,15 +1,9 @@
 import Station from '../schemas/Station';
-import redis from '../../libs/redis';
 
 class CloseController {
   async index(req, res) {
     const { radioId, genresIds } = req.params;
     const { page = 1 } = req.query;
-
-    const cache = await redis.get(`close-${page}-${radioId}-${genresIds}`);
-    if (cache) {
-      return res.json(JSON.parse(cache));
-    }
 
     let genresIdsFormatted = '';
 
@@ -19,7 +13,7 @@ class CloseController {
 
     const results = await Station.paginate(
       {
-        genres: { $in: genresIdsFormatted },
+        genres: { $in: genresIdsFormatted.length ? genresIdsFormatted : [[]] },
         countryCode: 'br',
         streams: { $ne: [] },
         id: { $ne: radioId },
@@ -31,11 +25,6 @@ class CloseController {
     );
 
     results.items = results.items.sort(() => Math.random() - 0.5);
-
-    await redis.set(
-      `close-${page}-${radioId}-${genresIds}`,
-      JSON.stringify(results)
-    );
 
     return res.json(results);
   }
