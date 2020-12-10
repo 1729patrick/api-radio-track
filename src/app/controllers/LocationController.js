@@ -18,7 +18,7 @@ class LocationController {
       }
     );
 
-    if (!results.length) {
+    if (!results.items.length) {
       results = await Station.paginate(
         {
           countryCode: 'br',
