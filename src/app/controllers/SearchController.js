@@ -28,7 +28,7 @@ class SearchController {
         {
           page,
 
-          populate: 'city',
+          populate: ['city', 'region'],
         }
       );
 

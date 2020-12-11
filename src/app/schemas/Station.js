@@ -3,6 +3,7 @@ import paginate from 'mongoose-paginate-v2';
 import aggregatePaginate from 'mongoose-aggregate-paginate-v2';
 
 import City from './City';
+import Region from './Region';
 
 const StationSchema = new mongoose.Schema(
   {
@@ -107,6 +108,13 @@ const StationSchema = new mongoose.Schema(
 StationSchema.virtual('city', {
   ref: City,
   localField: 'cityId',
+  foreignField: 'id',
+  justOne: true,
+});
+
+StationSchema.virtual('region', {
+  ref: Region,
+  localField: 'regionId',
   foreignField: 'id',
   justOne: true,
 });

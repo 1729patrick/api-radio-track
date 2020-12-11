@@ -20,7 +20,7 @@ class CloseController {
       },
       {
         page,
-        populate: 'city',
+        populate: ['city', 'region'],
       }
     );
 

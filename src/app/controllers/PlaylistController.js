@@ -14,7 +14,7 @@ class PlaylistController {
       { countryCode: 'br', streams: { $ne: [] } },
       {
         page,
-        populate: 'city',
+        populate: ['city', 'region'],
       }
     );
 
@@ -37,7 +37,7 @@ class PlaylistController {
         page,
 
         sort: { 'votes.up': 'desc' },
-        populate: 'city',
+        populate: ['city', 'region'],
       }
     );
 
@@ -59,7 +59,7 @@ class PlaylistController {
       {
         page,
 
-        populate: 'city',
+        populate: ['city', 'region'],
       }
     );
 
@@ -81,7 +81,7 @@ class PlaylistController {
       {
         page,
 
-        populate: 'city',
+        populate: ['city', 'region'],
       }
     );
 

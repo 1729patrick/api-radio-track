@@ -14,7 +14,7 @@ class LocationController {
       },
       {
         page,
-        populate: 'city',
+        populate: ['city', 'region'],
       }
     );
 
@@ -28,7 +28,7 @@ class LocationController {
         },
         {
           page,
-          populate: 'city',
+          populate: ['city', 'region'],
         }
       );
     }
