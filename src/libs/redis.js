@@ -7,6 +7,7 @@ class Redis {
 
     this.get = promisify(client.get).bind(client);
     this.set = promisify(client.set).bind(client);
+    this.reset = promisify(client.flushall).bind(client);
   }
 }
 

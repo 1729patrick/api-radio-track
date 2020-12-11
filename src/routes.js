@@ -6,6 +6,7 @@ import GenreController from './app/controllers/GenreController';
 import PlaylistController from './app/controllers/PlaylistController';
 import CloseController from './app/controllers/CloseController';
 import LocationController from './app/controllers/LocationController';
+import RedisController from './app/controllers/RedisController';
 
 const router = Router();
 
@@ -23,5 +24,6 @@ router.get(
   '/radio/:radioId/location/:countryCode/:regionId/:cityId',
   LocationController.index
 );
+router.post('/redis/reset', RedisController.index);
 
 export default router;
