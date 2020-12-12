@@ -7,6 +7,7 @@ import PlaylistController from './app/controllers/PlaylistController';
 import CloseController from './app/controllers/CloseController';
 import LocationController from './app/controllers/LocationController';
 import RedisController from './app/controllers/RedisController';
+import UtilController from './app/controllers/UtilController';
 
 const router = Router();
 
@@ -18,6 +19,7 @@ router.get('/playlists/random', PlaylistController.random);
 router.get('/playlists/popular', PlaylistController.popular);
 router.get('/playlists/recommend', PlaylistController.recommend);
 router.get('/playlists/location', PlaylistController.location);
+router.get('/util', UtilController.index);
 
 router.get('/radio/:radioId/closes/:genresIds', CloseController.index);
 router.get(
