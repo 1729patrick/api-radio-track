@@ -89,6 +89,33 @@ class PlaylistController {
 
     return res.json(results);
   }
+
+  async region(req, res) {
+    const { regionId } = req.params;
+    const { page = 1 } = req.query;
+
+    const cache = await redis.get(`region-${page}-${regionId}`);
+    if (cache) {
+      return res.json(JSON.parse(cache));
+    }
+
+    const results = await Station.paginate(
+      {
+        countryCode: 'br',
+        active: true,
+        regionId,
+        streams: { $ne: [] },
+      },
+      {
+        page,
+        populate: ['city', 'region'],
+      }
+    );
+
+    await redis.set(`region-${page}-${regionId}`, JSON.stringify(results));
+
+    return res.json(results);
+  }
 }
 
 export default new PlaylistController();

@@ -19,6 +19,10 @@ router.get('/playlists/random', PlaylistController.random);
 router.get('/playlists/popular', PlaylistController.popular);
 router.get('/playlists/recommend', PlaylistController.recommend);
 router.get('/playlists/location', PlaylistController.location);
+router.get(
+  '/playlists/region/:countryCode/:regionId',
+  PlaylistController.region
+);
 // router.get('/util', UtilController.index);
 // router.get('/util/update/stations', UtilController.updateStations);
 

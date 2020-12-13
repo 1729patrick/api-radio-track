@@ -18,7 +18,12 @@ class GenreController {
     } catch (e) {}
 
     const results = await Station.paginate(
-      { genres: { $in: genresIds }, countryCode: 'br', active: true, streams: { $ne: [] } },
+      {
+        genres: { $in: genresIds },
+        countryCode: 'br',
+        active: true,
+        streams: { $ne: [] },
+      },
       { page, populate: ['city', 'region'] }
     );
 
