@@ -7,7 +7,7 @@ class LocationController {
 
     let results = await Station.paginate(
       {
-        countryCode: 'br',
+        countryCode: 'br', active: true,
         cityId,
         streams: { $ne: [] },
         id: { $ne: radioId },
@@ -21,7 +21,7 @@ class LocationController {
     if (!results.items.length) {
       results = await Station.paginate(
         {
-          countryCode: 'br',
+          countryCode: 'br', active: true,
           regionId,
           streams: { $ne: [] },
           id: { $ne: radioId },

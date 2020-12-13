@@ -14,7 +14,7 @@ class CloseController {
     const results = await Station.paginate(
       {
         genres: { $in: genresIdsFormatted.length ? genresIdsFormatted : [[]] },
-        countryCode: 'br',
+        countryCode: 'br', active: true,
         streams: { $ne: [] },
         id: { $ne: radioId },
       },

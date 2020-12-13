@@ -11,7 +11,7 @@ class StationController {
     }
 
     const results = await Station.paginate(
-      { countryCode: 'br', streams: { $ne: [] } },
+      { countryCode: 'br', active: true, streams: { $ne: [] } },
       { page, populate: ['city', 'region'] }
     );
 

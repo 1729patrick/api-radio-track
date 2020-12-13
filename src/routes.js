@@ -20,6 +20,7 @@ router.get('/playlists/popular', PlaylistController.popular);
 router.get('/playlists/recommend', PlaylistController.recommend);
 router.get('/playlists/location', PlaylistController.location);
 router.get('/util', UtilController.index);
+router.get('/util/update/stations', UtilController.updateStations);
 
 router.get('/radio/:radioId/closes/:genresIds', CloseController.index);
 router.get(

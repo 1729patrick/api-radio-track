@@ -99,6 +99,11 @@ const StationSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Mixed,
       required: false,
     },
+    active: {
+      type: Boolean,
+      required: true,
+      default: true
+    }
   },
   {
     timestamps: true,

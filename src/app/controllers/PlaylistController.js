@@ -11,7 +11,7 @@ class PlaylistController {
     }
 
     const results = await Station.paginate(
-      { countryCode: 'br', streams: { $ne: [] } },
+      { countryCode: 'br', active: true, streams: { $ne: [] } },
       {
         page,
         populate: ['city', 'region'],
@@ -32,7 +32,7 @@ class PlaylistController {
     }
 
     const results = await Station.paginate(
-      { countryCode: 'br', streams: { $ne: [] } },
+      { countryCode: 'br', active: true, streams: { $ne: [] } },
       {
         page,
 
@@ -55,7 +55,7 @@ class PlaylistController {
     }
 
     const results = await Station.paginate(
-      { countryCode: 'br', streams: { $ne: [] } },
+      { countryCode: 'br', active: true, streams: { $ne: [] } },
       {
         page,
 
@@ -77,7 +77,7 @@ class PlaylistController {
     }
 
     const results = await Station.paginate(
-      { countryCode: 'br', streams: { $ne: [] } },
+      { countryCode: 'br', active: true, streams: { $ne: [] } },
       {
         page,
 

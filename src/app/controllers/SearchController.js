@@ -20,6 +20,7 @@ class SearchController {
       const results = await Station.paginate(
         {
           countryCode: 'br',
+          active: true,
           name: {
             $in: [new RegExp(q, 'i'), new RegExp(qNormalized, 'i')],
           },
