@@ -4,7 +4,7 @@ import Station from '../schemas/Station';
 class CloseController {
   async index(req, res) {
     const { radioId, genresIds } = req.params;
-    const { page = 1 } = req.query;
+    let { page = 1 } = req.query;
 
     const cache = await redis.get(`close-${page}-${genresIds}-${radioId}`);
     if (cache) {
@@ -16,6 +16,11 @@ class CloseController {
     try {
       genresIdsFormatted = JSON.parse(genresIds);
     } catch (e) {}
+
+    const currentPage = await redis.get(`close-page-${radioId}`);
+    if (currentPage && !genresIdsFormatted.length) {
+      page = Math.max(+currentPage % 104, 1);
+    }
 
     const results = await Station.paginate(
       {
@@ -40,6 +45,8 @@ class CloseController {
       'EX',
       60 * 60 * cacheExpirationInHours
     );
+
+    await redis.set(`close-page-${radioId}`, +page + 1);
 
     return res.json(results);
   }
