@@ -15,15 +15,11 @@ class SearchController {
         throw new Error();
       }
 
-      const qNormalized = q.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
       const results = await Station.paginate(
         {
           countryCode: 'br',
           active: true,
-          name: {
-            $in: [new RegExp(q, 'i'), new RegExp(qNormalized, 'i')],
-          },
+          $text: { $search: q },
           streams: { $ne: [] },
         },
         {
@@ -37,6 +33,7 @@ class SearchController {
 
       return res.json(results);
     } catch (e) {
+      console.log(e);
       return res.status(400).json({ error: 'Invalid search term.' });
     }
   }

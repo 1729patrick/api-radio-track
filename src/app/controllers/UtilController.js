@@ -53,8 +53,6 @@ class UtilController {
       active: true,
     }).select(['streams', 'id']);
 
-    return res.json({ active: list.length });
-
     for (let i = 0; i < list.length; i++) {
       const radio = list[i];
       await Station.findOneAndUpdate(

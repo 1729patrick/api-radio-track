@@ -102,8 +102,8 @@ const StationSchema = new mongoose.Schema(
     active: {
       type: Boolean,
       required: true,
-      default: true
-    }
+      default: true,
+    },
   },
   {
     timestamps: true,
@@ -123,6 +123,8 @@ StationSchema.virtual('region', {
   foreignField: 'id',
   justOne: true,
 });
+
+StationSchema.index({ '$**': 'text' });
 
 StationSchema.plugin(paginate);
 StationSchema.plugin(aggregatePaginate);
