@@ -48,10 +48,12 @@ class UtilController {
   async updateStations(_, res) {
     const errs = data.errs.filter((x) => x.errMessage);
 
-    const list = await Station.find({ countryCode: 'br' }).select([
-      'streams',
-      'id',
-    ]);
+    const list = await Station.find({
+      countryCode: 'br',
+      active: true,
+    }).select(['streams', 'id']);
+
+    return res.json({ active: list.length });
 
     for (let i = 0; i < list.length; i++) {
       const radio = list[i];
