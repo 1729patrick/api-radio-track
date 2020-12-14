@@ -23,6 +23,7 @@ router.get(
   '/playlists/region/:countryCode/:regionId',
   PlaylistController.region
 );
+router.get('/util/count', UtilController.count);
 // router.get('/util', UtilController.index);
 // router.get('/util/update/stations', UtilController.updateStations);
 
