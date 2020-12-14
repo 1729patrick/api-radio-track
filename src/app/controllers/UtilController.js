@@ -69,7 +69,7 @@ class UtilController {
     res.json({ active: active.length });
   }
 
-  async count(_res) {
+  async count(_, res) {
     const stations = await Station.find();
     return res.json({ count: stations.length });
   }
