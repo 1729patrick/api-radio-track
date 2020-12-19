@@ -19,17 +19,31 @@ class SearchController {
         {
           countryCode: 'br',
           active: true,
-          $text: { $search: q },
+
+          $or: [
+            // { $text: { $search: q } },
+            {
+              web: { $regex: q, $options: 'i' },
+            },
+            {
+              name: { $regex: q, $options: 'i' },
+            },
+            {
+              slogan: { $regex: q, $options: 'i' },
+            },
+          ],
+
           streams: { $ne: [] },
         },
         {
           page,
-
           populate: ['city', 'region'],
         }
       );
 
-      await redis.set(`search-${q}-${page}`, JSON.stringify(results));
+      if (results.items.length) {
+        await redis.set(`search-${q}-${page}`, JSON.stringify(results));
+      }
 
       return res.json(results);
     } catch (e) {
