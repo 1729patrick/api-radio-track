@@ -15,7 +15,7 @@ class PlaylistController {
         countryCode: 'br',
         active: true,
         streams: { $ne: [] },
-        image: { $ne: '' },
+        img: { $ne: '' },
       },
       {
         page,
@@ -41,7 +41,7 @@ class PlaylistController {
         countryCode: 'br',
         active: true,
         streams: { $ne: [] },
-        image: { $ne: '' },
+        img: { $ne: '' },
       },
       {
         page,
@@ -69,7 +69,7 @@ class PlaylistController {
         countryCode: 'br',
         active: true,
         streams: { $ne: [] },
-        image: { $ne: '' },
+        img: { $ne: '' },
       },
       {
         page,
@@ -96,7 +96,7 @@ class PlaylistController {
         countryCode: 'br',
         active: true,
         streams: { $ne: [] },
-        image: { $ne: '' },
+        img: { $ne: '' },
       },
       {
         page,
@@ -125,7 +125,7 @@ class PlaylistController {
         active: true,
         regionId,
         streams: { $ne: [] },
-        image: { $ne: '' },
+        img: { $ne: '' },
       },
       {
         page,
