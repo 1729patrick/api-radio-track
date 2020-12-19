@@ -11,7 +11,12 @@ class PlaylistController {
     }
 
     const results = await Station.paginate(
-      { countryCode: 'br', active: true, streams: { $ne: [] } },
+      {
+        countryCode: 'br',
+        active: true,
+        streams: { $ne: [] },
+        image: { $ne: '' },
+      },
       {
         page,
         populate: ['city', 'region'],
@@ -32,7 +37,12 @@ class PlaylistController {
     }
 
     const results = await Station.paginate(
-      { countryCode: 'br', active: true, streams: { $ne: [] } },
+      {
+        countryCode: 'br',
+        active: true,
+        streams: { $ne: [] },
+        image: { $ne: '' },
+      },
       {
         page,
 
@@ -55,7 +65,12 @@ class PlaylistController {
     }
 
     const results = await Station.paginate(
-      { countryCode: 'br', active: true, streams: { $ne: [] } },
+      {
+        countryCode: 'br',
+        active: true,
+        streams: { $ne: [] },
+        image: { $ne: '' },
+      },
       {
         page,
 
@@ -77,7 +92,12 @@ class PlaylistController {
     }
 
     const results = await Station.paginate(
-      { countryCode: 'br', active: true, streams: { $ne: [] } },
+      {
+        countryCode: 'br',
+        active: true,
+        streams: { $ne: [] },
+        image: { $ne: '' },
+      },
       {
         page,
 
@@ -105,6 +125,7 @@ class PlaylistController {
         active: true,
         regionId,
         streams: { $ne: [] },
+        image: { $ne: '' },
       },
       {
         page,
