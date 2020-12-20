@@ -83,11 +83,13 @@ class UtilController {
     try {
       const { size } = req.params;
 
+      let i1 = 0;
       const promises = [...new Array(+size)].map((_, i) => {
         return new Promise(async (resolve, reject) => {
           try {
             const response = await api.get('/genres/%5B%5B%5D%5D');
-            console.log(i, ' ', response.data?.items?.length);
+            i1++;
+            console.log(i, ' ', i1, ' ', response.data?.items?.length);
             resolve(response);
           } catch (e) {
             reject(e);
