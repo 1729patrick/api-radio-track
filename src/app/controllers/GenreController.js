@@ -6,10 +6,10 @@ class GenreController {
     const { id } = req.params;
     const { page = 1 } = req.query;
 
-    const cache = await redis.get(`genres-${id}-${page}`);
-    if (cache) {
-      return res.json(JSON.parse(cache));
-    }
+    // const cache = await redis.get(`genres-${id}-${page}`);
+    // if (cache) {
+    //   return res.json(JSON.parse(cache));
+    // }
 
     let genresIds = '';
 

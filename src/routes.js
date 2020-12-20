@@ -24,6 +24,7 @@ router.get(
   PlaylistController.region
 );
 router.get('/util/count', UtilController.count);
+router.get('/util/requests/:size', UtilController.requests);
 // router.get('/util', UtilController.index);
 // router.get('/util/update/stations', UtilController.updateStations);
 

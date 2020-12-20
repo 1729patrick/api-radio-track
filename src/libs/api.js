@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-	baseURL: 'https://openradio.app',
+  baseURL: process.env.URL_PROD,
 });
 
 export default api;

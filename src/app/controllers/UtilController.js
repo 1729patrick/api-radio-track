@@ -1,6 +1,7 @@
 import Station from '../schemas/Station';
 import axios from 'axios';
 import { data } from '../../invalid/errs';
+import api from '../../libs/api';
 
 class UtilController {
   async index(req, res) {
@@ -76,6 +77,31 @@ class UtilController {
     });
 
     return res.json({ count: stations.length });
+  }
+
+  async requests(req, res) {
+    try {
+      const { size } = req.params;
+
+      const promises = [...new Array(+size)].map((_, i) => {
+        return new Promise(async (resolve, reject) => {
+          try {
+            const response = await api.get('/genres/%5B%5B%5D%5D');
+            console.log(i, ' ', response.data?.items?.length);
+            resolve(response);
+          } catch (e) {
+            reject(e);
+          }
+        });
+      });
+
+      const responses = await Promise.allSettled(promises);
+
+      return res.json(responses.map((res) => ({ status: res?.value?.status })));
+    } catch (e) {
+      console.log(e);
+      return res.json({ error: true });
+    }
   }
 }
 
