@@ -3,35 +3,21 @@ import Station from '../schemas/Station';
 
 class LocationController {
   async index(req, res) {
-    const { radioId, regionId, cityId } = req.params;
-    const page = 1;
+    try {
+      const { radioId, regionId, cityId } = req.params;
+      const page = 1;
 
-    const cache = await redis.get(
-      `location-${page}-${'br'}-${regionId}-${cityId}-${radioId}`
-    );
-    if (cache) {
-      return res.json(JSON.parse(cache));
-    }
-    let results = await Station.paginate(
-      {
-        countryCode: 'br',
-        active: true,
-        cityId,
-        streams: { $ne: [] },
-        id: { $ne: radioId },
-      },
-      {
-        page,
-        populate: ['city', 'region'],
+      const cache = await redis.get(
+        `location-${page}-${'br'}-${regionId}-${cityId}-${radioId}`
+      );
+      if (cache) {
+        return res.json(JSON.parse(cache));
       }
-    );
-
-    if (!results.items.length) {
-      results = await Station.paginate(
+      let results = await Station.paginate(
         {
           countryCode: 'br',
           active: true,
-          regionId,
+          cityId,
           streams: { $ne: [] },
           id: { $ne: radioId },
         },
@@ -40,19 +26,39 @@ class LocationController {
           populate: ['city', 'region'],
         }
       );
+
+      if (!results.items.length) {
+        results = await Station.paginate(
+          {
+            countryCode: 'br',
+            active: true,
+            regionId,
+            streams: { $ne: [] },
+            id: { $ne: radioId },
+          },
+          {
+            page,
+            populate: ['city', 'region'],
+          }
+        );
+      }
+
+      results.items = results.items.sort(() => Math.random() - 0.5);
+
+      if (results?.items?.length) {
+        const cacheExpirationInHours = 1;
+        await redis.set(
+          `location-${page}-${'br'}-${regionId}-${cityId}-${radioId}`,
+          JSON.stringify(results),
+          'EX',
+          60 * 60 * cacheExpirationInHours
+        );
+      }
+
+      return res.json(results);
+    } catch (e) {
+      return res.status(400).json({ e: e.message });
     }
-
-    results.items = results.items.sort(() => Math.random() - 0.5);
-
-    const cacheExpirationInHours = 1;
-    await redis.set(
-      `location-${page}-${'br'}-${regionId}-${cityId}-${radioId}`,
-      JSON.stringify(results),
-      'EX',
-      60 * 60 * cacheExpirationInHours
-    );
-
-    return res.json(results);
   }
 }
 

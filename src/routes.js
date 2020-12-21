@@ -8,6 +8,7 @@ import CloseController from './app/controllers/CloseController';
 import LocationController from './app/controllers/LocationController';
 import RedisController from './app/controllers/RedisController';
 import UtilController from './app/controllers/UtilController';
+import ReviewController from './app/controllers/ReviewController';
 
 const router = Router();
 
@@ -34,5 +35,6 @@ router.get(
   LocationController.index
 );
 router.post('/redis/reset', RedisController.index);
+router.post('/app/reviews', ReviewController.index);
 
 export default router;

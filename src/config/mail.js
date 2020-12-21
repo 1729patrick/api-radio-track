@@ -7,6 +7,6 @@ export default {
     pass: process.env.MAIL_PASS,
   },
   default: {
-    from: '[DANGER] Rádio API <noreply@radioapi.com>',
+    from: 'Rádio API <noreply@radioapi.com>',
   },
 };
