@@ -35,6 +35,7 @@ router.get(
   LocationController.index
 );
 router.post('/redis/reset', RedisController.index);
-router.post('/app/reviews', ReviewController.index);
+router.get('/app/reviews/:password', ReviewController.index);
+router.post('/app/reviews', ReviewController.create);
 
 export default router;
