@@ -1,4 +1,5 @@
 import redis from '../../libs/redis';
+import { diacriticSensitiveRegex } from '../../util/distincRegexSensitive';
 import Station from '../schemas/Station';
 
 class SearchController {
@@ -6,34 +7,33 @@ class SearchController {
     try {
       const { q, page = 1 } = req.query;
 
-      const cache = await redis.get(`search-${q}-${page}`);
-      if (cache) {
-        return res.json(JSON.parse(cache));
-      }
+      // const cache = await redis.get(`search-${q}-${page}`);
+      // if (cache) {
+      //   return res.json(JSON.parse(cache));
+      // }
 
       if (q.length < 3) {
         throw new Error();
       }
 
+      const $regex = diacriticSensitiveRegex(q);
       const results = await Station.paginate(
         {
           countryCode: 'br',
           active: true,
-
+          streams: { $ne: [] },
           $or: [
             // { $text: { $search: q } },
             {
-              web: { $regex: q, $options: 'i' },
+              web: { $regex, $options: 'i' },
             },
             {
-              name: { $regex: q, $options: 'i' },
+              name: { $regex, $options: 'i' },
             },
             {
-              slogan: { $regex: q, $options: 'i' },
+              slogan: { $regex, $options: 'i' },
             },
           ],
-
-          streams: { $ne: [] },
         },
         {
           page,
