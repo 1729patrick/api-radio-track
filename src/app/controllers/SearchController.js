@@ -7,10 +7,10 @@ class SearchController {
     try {
       const { q, page = 1 } = req.query;
 
-      // const cache = await redis.get(`search-${q}-${page}`);
-      // if (cache) {
-      //   return res.json(JSON.parse(cache));
-      // }
+      const cache = await redis.get(`search-${q}-${page}`);
+      if (cache) {
+        return res.json(JSON.parse(cache));
+      }
 
       if (q.length < 3) {
         throw new Error();
