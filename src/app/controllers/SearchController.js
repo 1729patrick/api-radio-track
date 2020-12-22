@@ -1,5 +1,5 @@
 import redis from '../../libs/redis';
-import { diacriticSensitiveRegex } from '../../util/adistinctRegexSensitive';
+import { diacriticSensitiveRegex } from '../../util/distinctRegexSensitive';
 import Station from '../schemas/Station';
 
 class SearchController {
