@@ -3,6 +3,6 @@ yarn.lock
 yarn-error.log
 !*.gitkeep
 .env
-dist*
+dist/*
 package-lock.json
 yarn.lock.json
