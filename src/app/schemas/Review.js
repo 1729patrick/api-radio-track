@@ -14,6 +14,10 @@ const ReviewSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    historyCount: {
+      type: Number,
+      required: false,
+    },
   },
   {
     timestamps: true,
