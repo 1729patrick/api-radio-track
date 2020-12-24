@@ -5,7 +5,8 @@ class GenreController {
   async index(req, res) {
     try {
       const { id } = req.params;
-      const { page = 1 } = req.query;
+      let { page } = req.query;
+      page = Math.max(page, 1);
 
       const cache = await redis.get(`genres-${id}-${page}`);
       if (cache) {

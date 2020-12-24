@@ -5,7 +5,8 @@ import Station from '../schemas/Station';
 class SearchController {
   async index(req, res) {
     try {
-      const { q, page = 1 } = req.query;
+      let { q, page } = req.query;
+      page = Math.max(page, 1);
 
       const cache = await redis.get(`search-${q}-${page}`);
       if (cache) {

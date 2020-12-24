@@ -5,7 +5,8 @@ class CloseController {
   async index(req, res) {
     try {
       const { radioId, genresIds } = req.params;
-      let { page = 1 } = req.query;
+      let { page } = req.query;
+      page = Math.max(page, 1);
 
       const cache = await redis.get(`close-${page}-${genresIds}-${radioId}`);
       if (cache) {

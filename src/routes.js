@@ -19,9 +19,11 @@ router.get('/genres/:id', GenreController.index);
 router.get('/playlists/random', PlaylistController.random);
 router.get('/playlists/popular', PlaylistController.popular);
 router.get('/playlists/recommend', PlaylistController.recommend);
+
+// TODO: REMOVE
 router.get('/playlists/location', PlaylistController.location);
 router.get(
-  '/playlists/region/:countryCode/:regionId',
+  '/playlists/region/:countryCode/:regionId?',
   PlaylistController.region
 );
 router.get('/util/count', UtilController.count);

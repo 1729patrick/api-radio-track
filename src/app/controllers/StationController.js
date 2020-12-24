@@ -4,7 +4,8 @@ import Station from '../schemas/Station';
 class StationController {
   async list(req, res) {
     try {
-      const { page } = req.query;
+      let { page } = req.query;
+      page = Math.max(page, 1);
 
       const cache = await redis.get(`all-${page}`);
       if (cache) {
