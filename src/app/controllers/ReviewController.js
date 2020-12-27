@@ -10,7 +10,7 @@ class ReviewController {
         return res.status(403).json({ error: 'Invalid password' });
       }
 
-      const reviews = await Review.find();
+      const reviews = await Review.find().sort({ createdAt: -1 });
 
       return res.json(reviews);
     } catch (e) {
