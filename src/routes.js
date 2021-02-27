@@ -9,6 +9,7 @@ import LocationController from './app/controllers/LocationController';
 import RedisController from './app/controllers/RedisController';
 import UtilController from './app/controllers/UtilController';
 import ReviewController from './app/controllers/ReviewController';
+import IapController from './app/controllers/IapController';
 
 const router = Router();
 
@@ -39,5 +40,6 @@ router.get(
 router.post('/redis/reset', RedisController.index);
 router.get('/app/reviews/:password', ReviewController.index);
 router.post('/app/reviews', ReviewController.create);
+router.post('/app/purchases', IapController.index);
 
 export default router;
