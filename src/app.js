@@ -39,6 +39,12 @@ class App {
       express.static(resolve(__dirname, '..', 'tmp', 'images'))
     );
 
+    this.server.use(
+      '/flags',
+      // imageLimiter,
+      express.static(resolve(__dirname, '..', 'tmp', 'flags'))
+    );
+
     // this.server.use(limiter);
   }
 
