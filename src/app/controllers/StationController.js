@@ -1,3 +1,4 @@
+import mail from '../../libs/mail';
 import redis from '../../libs/redis';
 import Station from '../schemas/Station';
 
@@ -37,6 +38,15 @@ class StationController {
     } catch (e) {
       return res.status(400).json({ e: e.message });
     }
+  }
+
+  async create(req, res) {
+    await mail.sendMail({
+      to: '1729patrick@gmail.com',
+      subject: 'Rádio API - New Radio',
+      text: JSON.stringify(req.body),
+    });
+    return res.json(req.body);
   }
 }
 

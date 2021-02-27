@@ -10,11 +10,12 @@ import RedisController from './app/controllers/RedisController';
 import UtilController from './app/controllers/UtilController';
 import ReviewController from './app/controllers/ReviewController';
 import IapController from './app/controllers/IapController';
+import StationController from './app/controllers/StationController';
 
 const router = Router();
 
 // router.get('/stations', StationController.list);
-// router.get('/stations/:id', StationController.index);
+router.post('/stations', StationController.create);
 router.get('/search', SearchController.index);
 router.get('/genres/:id', GenreController.index);
 router.get('/playlists/random', PlaylistController.random);
