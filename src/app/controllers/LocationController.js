@@ -4,7 +4,7 @@ import Station from '../schemas/Station';
 class LocationController {
   async index(req, res) {
     try {
-      const { radioId, regionId, cityId } = req.params;
+      const { radioId, regionId = req.regionId, cityId } = req.params;
       const { countryCode = 'br' } = req;
       const page = 1;
 
