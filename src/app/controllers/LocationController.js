@@ -4,9 +4,12 @@ import Station from '../schemas/Station';
 class LocationController {
   async index(req, res) {
     try {
-      const { radioId, regionId = req.regionId, cityId } = req.params;
-      const { countryCode = 'br' } = req;
-      const page = 1;
+      const { radioId, cityId } = req.params;
+      let {
+        page = 1,
+        countryCode = 'br',
+        regionId = req.params.regionId,
+      } = req.query;
 
       const cache = await redis.get(
         `location-${page}-${countryCode}-${regionId}-${cityId}-${radioId}`
@@ -14,11 +17,12 @@ class LocationController {
       if (cache) {
         return res.json(JSON.parse(cache));
       }
+
       let results = await Station.paginate(
         {
           countryCode,
           cityId,
-          active: true,
+          //active: true,
           streams: { $ne: [] },
           id: { $ne: radioId },
         },
@@ -32,8 +36,23 @@ class LocationController {
         results = await Station.paginate(
           {
             countryCode,
-            active: true,
+            //active: true,
             regionId,
+            streams: { $ne: [] },
+            id: { $ne: radioId },
+          },
+          {
+            page,
+            populate: ['city', 'region'],
+          }
+        );
+      }
+
+      if (!results.items.length) {
+        results = await Station.paginate(
+          {
+            countryCode,
+            //active: true,
             streams: { $ne: [] },
             id: { $ne: radioId },
           },

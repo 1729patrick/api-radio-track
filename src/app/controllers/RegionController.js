@@ -13,9 +13,10 @@ class StationController {
 
       const results = await Region.find({ country }).sort({ name: 1 });
 
-      const items = results.map(({ name, slug }) => ({
+      const items = results.map(({ name, slug, id }) => ({
         id: slug,
         name,
+        code: id,
       }));
 
       await redis.set(`regions-${country}`, JSON.stringify({ items }));

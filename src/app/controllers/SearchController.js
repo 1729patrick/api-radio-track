@@ -5,9 +5,7 @@ import Station from '../schemas/Station';
 class SearchController {
   async index(req, res) {
     try {
-      let { q, page } = req.query;
-      const { countryCode = 'br' } = req;
-      page = Math.max(1, 1);
+      const { q, page = 1, countryCode = 'br' } = req.query;
 
       const cache = await redis.get(`search-${countryCode}-${q}-${page}`);
       if (cache) {
@@ -22,7 +20,7 @@ class SearchController {
       const results = await Station.paginate(
         {
           countryCode,
-          active: true,
+          // active: true,
           streams: { $ne: [] },
           $or: [
             // { $text: { $search: q } },
@@ -45,7 +43,7 @@ class SearchController {
 
       if (results.items.length) {
         await redis.set(
-          `search-${countryCode}${q}-${page}`,
+          `search-${countryCode}-${q}-${page}`,
           JSON.stringify(results)
         );
       }

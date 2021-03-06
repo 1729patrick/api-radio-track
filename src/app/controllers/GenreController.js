@@ -5,9 +5,7 @@ class GenreController {
   async index(req, res) {
     try {
       const { id } = req.params;
-      let { page } = req.query;
-      const { countryCode = 'br' } = req;
-      page = Math.max(1, 1);
+      let { page = 1, countryCode = 'br' } = req.query;
 
       const cache = await redis.get(`genres-${countryCode}-${id}-${page}`);
       if (cache) {
@@ -24,7 +22,7 @@ class GenreController {
         {
           countryCode,
           genres: { $in: genresIds },
-          active: true,
+          //active: true,
           streams: { $ne: [] },
         },
         { page, populate: ['city', 'region'] }

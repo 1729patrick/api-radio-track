@@ -5,9 +5,7 @@ class CloseController {
   async index(req, res) {
     try {
       const { radioId, genresIds } = req.params;
-      let { page } = req.query;
-      const { countryCode = 'br' } = req;
-      page = Math.max(1, 1);
+      let { page = 1, countryCode = 'br' } = req.query;
 
       const cache = await redis.get(
         `close-${countryCode}-${page}-${genresIds}-${radioId}`
@@ -22,18 +20,13 @@ class CloseController {
         genresIdsFormatted = JSON.parse(genresIds);
       } catch (e) {}
 
-      const currentPage = await redis.get(`close-page-${radioId}`);
-      if (currentPage && !genresIdsFormatted.length) {
-        page = Math.max(+currentPage % 104, 1);
-      }
-
       const results = await Station.paginate(
         {
           genres: {
             $in: genresIdsFormatted.length ? genresIdsFormatted : [[]],
           },
           countryCode,
-          active: true,
+          //active: true,
           streams: { $ne: [] },
           id: { $ne: radioId },
         },

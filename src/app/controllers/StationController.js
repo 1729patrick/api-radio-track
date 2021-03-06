@@ -15,7 +15,11 @@ class StationController {
       }
 
       const results = await Station.paginate(
-        { countryCode, active: true, streams: { $ne: [] } },
+        {
+          countryCode,
+          //active: true,
+          streams: { $ne: [] },
+        },
         { page, populate: ['city', 'region'] }
       );
 
@@ -45,7 +49,7 @@ class StationController {
     await mail.sendMail({
       to: '1729patrick@gmail.com',
       subject: 'Rádio API - New Radio',
-      text: JSON.stringify(req.body),
+      text: JSON.stringify({ ...req.body, ...req.query }),
     });
     return res.json(req.body);
   }

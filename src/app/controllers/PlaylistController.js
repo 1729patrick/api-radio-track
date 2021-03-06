@@ -4,9 +4,7 @@ import redis from '../../libs/redis';
 class PlaylistController {
   async random(req, res) {
     try {
-      let { page } = req.query;
-      const { countryCode = 'br' } = req;
-      page = Math.max(1, 1);
+      let { page = 1, countryCode = 'br' } = req.query;
 
       const cache = await redis.get(`random-${countryCode}-${page}`);
       if (cache) {
@@ -16,7 +14,7 @@ class PlaylistController {
       const results = await Station.paginate(
         {
           countryCode,
-          active: true,
+          //active: true,
           streams: { $ne: [] },
           img: { $ne: null },
         },
@@ -41,9 +39,7 @@ class PlaylistController {
 
   async popular(req, res) {
     try {
-      let { page } = req.query;
-      const { countryCode = 'br' } = req;
-      page = Math.max(1, 1);
+      let { page = 1, countryCode = 'br' } = req.query;
 
       const cache = await redis.get(`popular-${countryCode}-${page}`);
       if (cache) {
@@ -53,7 +49,7 @@ class PlaylistController {
       const results = await Station.paginate(
         {
           countryCode,
-          active: true,
+          //active: true,
           streams: { $ne: [] },
           img: { $ne: null },
         },
@@ -80,9 +76,7 @@ class PlaylistController {
 
   async location(req, res) {
     try {
-      let { page } = req.query;
-      const { countryCode = 'br' } = req;
-      page = Math.max(1, 1);
+      let { page = 1, countryCode = 'br' } = req.query;
 
       const cache = await redis.get(`location-${countryCode}-${page}`);
       if (cache) {
@@ -92,13 +86,12 @@ class PlaylistController {
       const results = await Station.paginate(
         {
           countryCode,
-          active: true,
+          //active: true,
           streams: { $ne: [] },
           img: { $ne: null },
         },
         {
           page,
-
           populate: ['city', 'region'],
         }
       );
@@ -118,9 +111,7 @@ class PlaylistController {
 
   async recommend(req, res) {
     try {
-      let { page } = req.query;
-      page = Math.max(1, 1);
-      const { countryCode = 'br' } = req;
+      let { page = 1, countryCode = 'br' } = req.query;
 
       const cache = await redis.get(`recommend-${countryCode}-${page}`);
       if (cache) {
@@ -130,7 +121,7 @@ class PlaylistController {
       const results = await Station.paginate(
         {
           countryCode,
-          active: true,
+          //active: true,
           streams: { $ne: [] },
           img: { $ne: null },
         },
@@ -155,10 +146,11 @@ class PlaylistController {
 
   async region(req, res) {
     try {
-      const { regionId = req.regionId } = req.params;
-      const { countryCode = 'br' } = req;
-      let { page } = req.query;
-      page = Math.max(1, 1);
+      let {
+        page = 1,
+        countryCode = 'br',
+        regionId = req.params.regionId,
+      } = req.query;
 
       const cache = await redis.get(
         `region-${countryCode}-${page}-${regionId}`
@@ -170,7 +162,7 @@ class PlaylistController {
       const results = await Station.paginate(
         {
           countryCode,
-          active: true,
+          //active: true,
           regionId: regionId || 'not_found',
           streams: { $ne: [] },
           img: { $ne: null },

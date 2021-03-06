@@ -7,7 +7,7 @@ class UtilController {
   async index(req, res) {
     const list = await Station.find({
       countryCode: 'br',
-      active: true,
+      //active: true,
     }).select(['streams', 'id']);
 
     const listFormatted = list.map(({ id, streams }) => ({
@@ -51,7 +51,7 @@ class UtilController {
 
     const list = await Station.find({
       countryCode: 'br',
-      active: true,
+      //active: true,
     }).select(['streams', 'id']);
 
     for (let i = 0; i < list.length; i++) {
@@ -64,7 +64,7 @@ class UtilController {
 
     const active = await Station.find({
       countryCode: 'br',
-      active: true,
+      //active: true,
     }).select(['streams', 'id']);
 
     res.json({ active: active.length });
@@ -74,8 +74,8 @@ class UtilController {
     const { countryCode = 'br' } = req;
 
     const stations = await Station.find({
-      countryCode,
-      active: true,
+      // countryCode,
+      //active: true,
     });
 
     return res.json({ count: stations.length });
