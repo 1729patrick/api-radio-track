@@ -6,9 +6,10 @@ class GenreController {
     try {
       const { id } = req.params;
       let { page } = req.query;
-      page = Math.max(page, 1);
+      const { countryCode = 'br' } = req;
+      page = Math.max(1, 1);
 
-      const cache = await redis.get(`genres-${id}-${page}`);
+      const cache = await redis.get(`genres-${countryCode}-${id}-${page}`);
       if (cache) {
         return res.json(JSON.parse(cache));
       }
@@ -21,8 +22,8 @@ class GenreController {
 
       const results = await Station.paginate(
         {
+          countryCode,
           genres: { $in: genresIds },
-          countryCode: 'br',
           active: true,
           streams: { $ne: [] },
         },
@@ -30,7 +31,10 @@ class GenreController {
       );
 
       if (results?.items?.length) {
-        await redis.set(`genres-${id}-${page}`, JSON.stringify(results));
+        await redis.set(
+          `genres-${countryCode}-${id}-${page}`,
+          JSON.stringify(results)
+        );
       }
 
       return res.json(results);

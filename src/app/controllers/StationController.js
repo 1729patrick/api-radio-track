@@ -6,20 +6,21 @@ class StationController {
   async list(req, res) {
     try {
       let { page } = req.query;
-      page = Math.max(page, 1);
+      const { countryCode = 'br' } = req;
+      page = Math.max(1, 1);
 
-      const cache = await redis.get(`all-${page}`);
+      const cache = await redis.get(`all-${countryCode}-${page}`);
       if (cache) {
         return res.json(JSON.parse(cache));
       }
 
       const results = await Station.paginate(
-        { countryCode: 'br', active: true, streams: { $ne: [] } },
+        { countryCode, active: true, streams: { $ne: [] } },
         { page, populate: ['city', 'region'] }
       );
 
       if (results?.items?.length) {
-        await redis.set(`all-${page}`, JSON.stringify(results));
+        await redis.set(`all-${countryCode}-${page}`, JSON.stringify(results));
       }
 
       return res.json(results);

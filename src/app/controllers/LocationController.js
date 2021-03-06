@@ -5,19 +5,20 @@ class LocationController {
   async index(req, res) {
     try {
       const { radioId, regionId, cityId } = req.params;
+      const { countryCode = 'br' } = req;
       const page = 1;
 
       const cache = await redis.get(
-        `location-${page}-${'br'}-${regionId}-${cityId}-${radioId}`
+        `location-${page}-${countryCode}-${regionId}-${cityId}-${radioId}`
       );
       if (cache) {
         return res.json(JSON.parse(cache));
       }
       let results = await Station.paginate(
         {
-          countryCode: 'br',
-          active: true,
+          countryCode,
           cityId,
+          active: true,
           streams: { $ne: [] },
           id: { $ne: radioId },
         },
@@ -30,7 +31,7 @@ class LocationController {
       if (!results.items.length) {
         results = await Station.paginate(
           {
-            countryCode: 'br',
+            countryCode,
             active: true,
             regionId,
             streams: { $ne: [] },
@@ -48,7 +49,7 @@ class LocationController {
       if (results?.items?.length) {
         const cacheExpirationInHours = 1;
         await redis.set(
-          `location-${page}-${'br'}-${regionId}-${cityId}-${radioId}`,
+          `location-${page}-${countryCode}-${regionId}-${cityId}-${radioId}`,
           JSON.stringify(results),
           'EX',
           60 * 60 * cacheExpirationInHours

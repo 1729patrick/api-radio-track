@@ -6,9 +6,10 @@ class SearchController {
   async index(req, res) {
     try {
       let { q, page } = req.query;
-      page = Math.max(page, 1);
+      const { countryCode = 'br' } = req;
+      page = Math.max(1, 1);
 
-      const cache = await redis.get(`search-${q}-${page}`);
+      const cache = await redis.get(`search-${countryCode}-${q}-${page}`);
       if (cache) {
         return res.json(JSON.parse(cache));
       }
@@ -20,7 +21,7 @@ class SearchController {
       const $regex = diacriticSensitiveRegex(q);
       const results = await Station.paginate(
         {
-          countryCode: 'br',
+          countryCode,
           active: true,
           streams: { $ne: [] },
           $or: [
@@ -43,7 +44,10 @@ class SearchController {
       );
 
       if (results.items.length) {
-        await redis.set(`search-${q}-${page}`, JSON.stringify(results));
+        await redis.set(
+          `search-${countryCode}${q}-${page}`,
+          JSON.stringify(results)
+        );
       }
 
       return res.json(results);

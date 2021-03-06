@@ -70,9 +70,11 @@ class UtilController {
     res.json({ active: active.length });
   }
 
-  async count(_, res) {
+  async count(req, res) {
+    const { countryCode = 'br' } = req;
+
     const stations = await Station.find({
-      countryCode: 'br',
+      countryCode,
       active: true,
     });
 

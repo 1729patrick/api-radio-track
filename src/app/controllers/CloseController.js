@@ -6,9 +6,12 @@ class CloseController {
     try {
       const { radioId, genresIds } = req.params;
       let { page } = req.query;
-      page = Math.max(page, 1);
+      const { countryCode = 'br' } = req;
+      page = Math.max(1, 1);
 
-      const cache = await redis.get(`close-${page}-${genresIds}-${radioId}`);
+      const cache = await redis.get(
+        `close-${countryCode}-${page}-${genresIds}-${radioId}`
+      );
       if (cache) {
         return res.json(JSON.parse(cache));
       }
@@ -29,7 +32,7 @@ class CloseController {
           genres: {
             $in: genresIdsFormatted.length ? genresIdsFormatted : [[]],
           },
-          countryCode: 'br',
+          countryCode,
           active: true,
           streams: { $ne: [] },
           id: { $ne: radioId },
@@ -46,7 +49,7 @@ class CloseController {
 
       if (results?.items?.length) {
         await redis.set(
-          `close-${page}-${genresIds}-${radioId}`,
+          `close-${countryCode}-${page}-${genresIds}-${radioId}`,
           JSON.stringify(results),
           'EX',
           60 * 60 * cacheExpirationInHours

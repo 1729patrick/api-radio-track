@@ -1,6 +1,5 @@
 import { Router } from 'express';
 
-// import StationController from './app/controllers/StationController';
 import SearchController from './app/controllers/SearchController';
 import GenreController from './app/controllers/GenreController';
 import PlaylistController from './app/controllers/PlaylistController';
@@ -11,10 +10,14 @@ import UtilController from './app/controllers/UtilController';
 import ReviewController from './app/controllers/ReviewController';
 import IapController from './app/controllers/IapController';
 import StationController from './app/controllers/StationController';
+import RegionController from './app/controllers/RegionController';
+
+import locationMiddleware from './app/middlewares/location';
 
 const router = Router();
 
-// router.get('/stations', StationController.list);
+router.use(locationMiddleware);
+
 router.post('/stations', StationController.create);
 router.get('/search', SearchController.index);
 router.get('/genres/:id', GenreController.index);
@@ -22,16 +25,15 @@ router.get('/playlists/random', PlaylistController.random);
 router.get('/playlists/popular', PlaylistController.popular);
 router.get('/playlists/recommend', PlaylistController.recommend);
 
-// TODO: REMOVE
 router.get('/playlists/location', PlaylistController.location);
 router.get(
-  '/playlists/region/:countryCode/:regionId?',
+  '/playlists/region/:countryCode?/:regionId?',
   PlaylistController.region
 );
 router.get('/util/count', UtilController.count);
 router.get('/util/requests/:size', UtilController.requests);
-// router.get('/util', UtilController.index);
-// router.get('/util/update/stations', UtilController.updateStations);
+
+router.get('/regions/:country', RegionController.index);
 
 router.get('/radio/:radioId/closes/:genresIds', CloseController.index);
 router.get(
