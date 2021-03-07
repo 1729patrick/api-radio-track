@@ -14,7 +14,6 @@ import RegionController from './app/controllers/RegionController';
 const router = Router();
 
 router.use((req, res, next) => {
-  console.log();
   console.log('####', req.path, '####', req.body, req.query, req.params);
 
   next();
@@ -40,7 +39,10 @@ router.get('/util/count', UtilController.count);
 
 router.get('/regions/:country', RegionController.index);
 
-router.get('/radio/:radioId/closes/:genresIds', CloseController.index);
+router.get(
+  '/radio/:radioId/closes/:genresIds/:countryCode?',
+  CloseController.index
+);
 
 router.get(
   '/radio/:radioId/location/:countryCode/:regionId/:cityId',

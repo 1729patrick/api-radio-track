@@ -4,12 +4,8 @@ import Station from '../schemas/Station';
 class LocationController {
   async index(req, res) {
     try {
-      const { radioId, cityId } = req.params;
-      let {
-        page = 1,
-        countryCode = 'br',
-        regionId = req.params.regionId,
-      } = req.query;
+      const { radioId, cityId, regionId, countryCode } = req.params;
+      let { page = 1 } = req.query;
 
       const cache = await redis.get(
         `location-${page}-${countryCode}-${regionId}-${cityId}-${radioId}`

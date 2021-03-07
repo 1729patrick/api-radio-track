@@ -146,11 +146,8 @@ class PlaylistController {
 
   async region(req, res) {
     try {
-      let {
-        page = 1,
-        countryCode = 'br',
-        regionId = req.params.regionId,
-      } = req.query;
+      const { regionId } = req.params;
+      let { page = 1, countryCode = 'br' } = req.query;
 
       const cache = await redis.get(
         `region-${countryCode}-${page}-${regionId}`

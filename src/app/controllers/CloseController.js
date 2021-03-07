@@ -4,8 +4,8 @@ import Station from '../schemas/Station';
 class CloseController {
   async index(req, res) {
     try {
-      const { radioId, genresIds } = req.params;
-      let { page = 1, countryCode = 'br' } = req.query;
+      const { radioId, genresIds, countryCode } = req.params;
+      let { page = 1 } = req.query;
 
       const cache = await redis.get(
         `close-${countryCode}-${page}-${genresIds}-${radioId}`
